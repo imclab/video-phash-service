@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+var app = require('../lib/app');
+
+var port = process.env.PORT || 3016;
+
+app.listen(port, function (err) {
+  if (err) throw err;
+  console.log('Phash service listening on port %s', port);
+});
