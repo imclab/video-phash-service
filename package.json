@@ -37,5 +37,6 @@
     "micro",
     "service"
   ],
+  "main": "lib",
   "bin": "bin/www"
 }

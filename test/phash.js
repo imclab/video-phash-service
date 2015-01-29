@@ -52,7 +52,7 @@ it('GET /:url', function (done) {
 })
 
 it('GET /:encryptedUrl', function (done) {
-  var cipher = crypto.createCipher('aes256', 'fuiszftw');
+  var cipher = crypto.createCipher('aes256', require('../config').password);
   var buffers = [];
   buffers.push(cipher.update(url));
   buffers.push(cipher.final());
