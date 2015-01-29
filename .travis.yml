@@ -4,3 +4,7 @@ node_js:
 language: node_js
 script: "npm run-script test-travis"
 after_script: "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
+before_install:
+  - sudo apt-get -y update
+  - sudo apt-get install cimg-dev libphash0-dev
+  - curl http://ffmpeg.gusari.org/static/64bit/ffmpeg.static.64bit.latest.tar.gz | sudo tar -C /usr/local/bin/ -xvz
