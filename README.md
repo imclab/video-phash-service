@@ -28,6 +28,8 @@ Returns:
 
 etc.
 
+To get the actual scene boundaries, you need to use https://github.com/math-utils/hamming-distance.
+
 ## GET /:encryptedUrl
 
 By default, the password is `mgmt`.
