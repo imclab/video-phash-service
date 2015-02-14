@@ -15,7 +15,7 @@ before(function () {
   return redis.flushall();
 })
 
-it('should extract phashes', function () {
+it.skip('should extract phashes', function () {
   return sbd(url).then(function (phashes) {
     assert(Array.isArray(phashes));
     phashes.forEach(function (phash) {
