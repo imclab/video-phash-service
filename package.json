@@ -8,6 +8,7 @@
   "dependencies": {
     "debug": "^2.1.1",
     "download-cache": "^1.0.1",
+    "hash-stream": "^1.1.0",
     "koa": "0",
     "koa-compress": "^1.0.8",
     "koa-favicon": "^1.2.0",
