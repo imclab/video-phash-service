@@ -1,5 +1,6 @@
 'use strict'
 
+const exec = require('child_process').exec
 const request = require('supertest')
 const assert = require('assert')
 const crypto = require('crypto')
@@ -9,6 +10,7 @@ const phashFile = require('../lib/phash-file')
 const server = require('../lib/app').listen()
 
 const url = 'http://archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb.mp4'
+const url2 = 'http://techslides.com/demos/sample-videos/small.mp4'
 
 before(function () {
   const redis = require('then-redis').createClient(process.env.REDIS_URI || 'tcp://localhost:6379')
@@ -24,6 +26,10 @@ it('should extract phashes', function () {
       assert(phash.length === 8)
     })
   })
+})
+
+it('./bin/phash-video <url>', function (done) {
+  exec('./bin/phash-video ' + url, done)
 })
 
 it('GET /:url', function (done) {
@@ -50,7 +56,7 @@ it('GET /:url', function (done) {
 it('GET /:encryptedUrl', function (done) {
   let cipher = crypto.createCipher('aes256', require('../config').password)
   let buffers = []
-  buffers.push(cipher.update(url))
+  buffers.push(cipher.update(url2))
   buffers.push(cipher.final())
 
   next()

@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+'use strict'
+
+/**
+ * TODO: make more DRY. there's a lot of repetition with the app.
+ */
+
+const download = require('download-cache')
+const hashStream = require('hash-stream')
+const crypto = require('crypto')
+
+const phashFile = require('../lib/phash-file')
+const redis = require('../lib/redis')
+const config = require('../config')
+
+const program = require('commander')
+  .usage('<video_url>')
+  .parse(process.argv)
+
+const assert = require('assert')
+
+const url = program.args[0]
+assert(url, 'Video URL must be supplied!')
+
+const hash = calculate(url)
+let sha
+
+download(url).then(function (filename) {
+  return hashStream(filename, 'sha256').then(function (_sha) {
+    sha = _sha.toString('hex')
+    return phashFile(filename)
+  })
+}).then(function (phashes) {
+  phashes = JSON.stringify(phashes.map(toHex))
+  redis.multi()
+  // cache for a month
+  redis.set('cache:' + hash, phashes, 'EX', String(config.maxage))
+  redis.set('cache:' + sha, phashes, 'EX', String(config.maxage))
+  // unset as processing
+  redis.del('processing:' + hash)
+  redis.del('processing:' + sha)
+  return redis.exec().then(function () {
+    process.exit(0)
+  })
+}).catch(/* istanbul ignore next */ function (err) {
+  console.error(err.stack)
+  // unset as processing
+  redis.multi()
+  redis.del('processing:' + hash)
+  redis.del('processing:' + sha)
+  return redis.exec().then(function () {
+    process.exit(1)
+  }).catch(function (err) {
+    console.error(err.stack)
+    process.exit(1)
+  })
+})
+
+/**
+ * Calculate the sha256 of url.
+ */
+
+function calculate(url) {
+  return crypto.createHash('sha256').update(url).digest('hex')
+}
+
+/**
+ * Convert a buffer to hex.
+ */
+
+function toHex(buf) {
+  return buf.toString('hex')
+}
