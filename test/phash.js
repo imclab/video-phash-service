@@ -5,10 +5,10 @@ const assert = require('assert')
 const crypto = require('crypto')
 const co = require('co')
 
+const phashFile = require('../lib/phash-file')
 const server = require('../lib/app').listen()
-const sbd = require('..')
 
-const url = 'https://archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb.mp4'
+const url = 'http://archive.org/download/Windows7WildlifeSampleVideo/Wildlife_512kb.mp4'
 
 before(function () {
   const redis = require('then-redis').createClient(process.env.REDIS_URI || 'tcp://localhost:6379')
@@ -16,8 +16,8 @@ before(function () {
   return redis.flushall()
 })
 
-it.skip('should extract phashes', function () {
-  return sbd(url).then(function (phashes) {
+it('should extract phashes', function () {
+  return phashFile(url).then(function (phashes) {
     assert(Array.isArray(phashes))
     phashes.forEach(function (phash) {
       assert(Buffer.isBuffer(phash))
