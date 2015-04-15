@@ -40,6 +40,7 @@ download(url).then(function (filename) {
   redis.del('processing:' + hash)
   redis.del('processing:' + sha)
   return redis.exec().then(function () {
+    console.log('Successfully phashed video: %s', url)
     process.exit(0)
   })
 }).catch(/* istanbul ignore next */ function (err) {
