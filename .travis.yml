@@ -5,7 +5,7 @@ script: "npm run-script test-travis"
 after_script: "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
 before_install:
   - sudo apt-get -y update
-  - sudo apt-get install cimg-dev libphash0-dev xz-utils
+  - sudo apt-get install cimg-dev libphash0-dev
   - curl http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz | sudo tar -C /usr/local/bin/ -xJ --strip-components=1
 services:
   - redis-server
