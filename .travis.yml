@@ -6,6 +6,6 @@ after_script: "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
 before_install:
   - sudo apt-get -y update
   - sudo apt-get install cimg-dev libphash0-dev xz-utils
-  - curl http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz | sudo tar -C /usr/local/bin/ -xJz
+  - curl http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz | sudo tar -C /usr/local/bin/ -xvz
 services:
   - redis-server
