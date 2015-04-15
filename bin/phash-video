@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 'use strict'
 
-/**
- * TODO: make more DRY. there's a lot of repetition with the app.
- */
-
 const download = require('download-cache')
 const hashStream = require('hash-stream')
 const crypto = require('crypto')
@@ -31,6 +27,10 @@ download(url).then(function (filename) {
     return phashFile(filename)
   })
 }).then(function (phashes) {
+  /**
+   * TODO: make more DRY. there's a lot of repetition with the app.
+   */
+
   phashes = JSON.stringify(phashes.map(toHex))
   redis.multi()
   // cache for a month
