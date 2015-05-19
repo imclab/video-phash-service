@@ -7,7 +7,6 @@
 [![Dependency Status][david-image]][david-url]
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
-[![Gittip][gittip-image]][gittip-url]
 
 Get all the phashes of all the frames of a video.
 
@@ -66,5 +65,3 @@ function encrypt(url) {
 [license-url]: LICENSE
 [downloads-image]: http://img.shields.io/npm/dm/video-phash-service.svg?style=flat-square
 [downloads-url]: https://npmjs.org/package/video-phash-service
-[gittip-image]: https://img.shields.io/gratipay/jonathanong.svg?style=flat-square
-[gittip-url]: https://gratipay.com/jonathanong/
