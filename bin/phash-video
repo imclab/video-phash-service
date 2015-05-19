@@ -32,24 +32,24 @@ download(url).then(function (filename) {
    */
 
   phashes = JSON.stringify(phashes.map(toHex))
-  redis.multi()
+  return redis.multi()
   // cache for a month
-  redis.set('cache:' + hash, phashes, 'EX', String(config.maxage))
-  redis.set('cache:' + sha, phashes, 'EX', String(config.maxage))
+  .set('cache:' + hash, phashes, 'EX', String(config.maxage))
+  .set('cache:' + sha, phashes, 'EX', String(config.maxage))
   // unset as processing
-  redis.del('processing:' + hash)
-  redis.del('processing:' + sha)
-  return redis.exec().then(function () {
+  .del('processing:' + hash)
+  .del('processing:' + sha)
+  .exec().then(function () {
     console.log('Successfully phashed video: %s', url)
     process.exit(0)
   })
 }).catch(/* istanbul ignore next */ function (err) {
   console.error(err.stack)
   // unset as processing
-  redis.multi()
-  redis.del('processing:' + hash)
-  redis.del('processing:' + sha)
-  return redis.exec().then(function () {
+  return redis.multi()
+  .del('processing:' + hash)
+  .del('processing:' + sha)
+  .exec().then(function () {
     process.exit(1)
   }).catch(function (err) {
     console.error(err.stack)

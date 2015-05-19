@@ -13,7 +13,7 @@ const url = 'http://archive.org/download/Windows7WildlifeSampleVideo/Wildlife_51
 const url2 = 'http://techslides.com/demos/sample-videos/small.mp4'
 
 before(function () {
-  const redis = require('then-redis').createClient(process.env.REDIS_URI || 'tcp://localhost:6379')
+  const redis = require('ioredis').createClient(process.env.REDIS_URI || 'tcp://localhost:6379')
 
   return redis.flushall()
 })
