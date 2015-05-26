@@ -18,15 +18,20 @@ const assert = require('assert')
 const url = program.args[0]
 assert(url, 'Video URL must be supplied!')
 
+console.log('Phasing video: %s', url)
+
 const hash = calculate(url)
 let sha
 
 download(url).then(function (filename) {
+  console.log('Downloaded video: %s', url)
   return hashStream(filename, 'sha256').then(function (_sha) {
     sha = _sha.toString('hex')
     return phashFile(filename)
   })
 }).then(function (phashes) {
+  console.log('Phashed video: %s', url)
+
   /**
    * TODO: make more DRY. there's a lot of repetition with the app.
    */
