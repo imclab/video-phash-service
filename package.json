@@ -1,7 +1,7 @@
 {
   "name": "video-phash-service",
   "description": "Video thumbnail phashing microservice",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "author": "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)",
   "license": "MIT",
   "repository": "mgmtio/video-phash-service",
